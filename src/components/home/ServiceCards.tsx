@@ -1,101 +1,146 @@
-<!doctype html>
-<html lang="en">
+import { UserCircle, CreditCard, MapPin, Building, Users, Gift, Plane } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
-
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
-
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
-
-  <link rel="canonical" href="https://enter.converge.ai/" />
-
-  <script type="application/ld+json">
+const services = [
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+    id: 1,
+    icon: Users,
+    title: "Become an SSS Member",
+    description: "It pays to be an SSS member. Read about the SSS coverage program and know the type of membership that's for you.",
+    gradient: "from-blue-600 to-blue-800",
+    route: "/become-member",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/sss-membership-card_b28b15f0.png",
+  },
+  {
+    id: 2,
+    icon: Plane,
+    title: "SSS for Filipinos Abroad",
+    description: "Your SSS membership continues even when you're residing abroad - whether you're an Overseas Filipino worker, or a permanent resident of another country.",
+    gradient: "from-teal-600 to-cyan-700",
+    route: "/ofw-program",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/sss-ofw-abroad-card_d3416ac8.png",
+  },
+  {
+    id: 3,
+    icon: Building,
+    title: "Be a Contribution Subsidy Provider",
+    description: "Through your partnership, subsidize SSS contributions for self-employed, land-based Overseas Filipino workers and voluntary members.",
+    gradient: "from-orange-600 to-red-600",
+    route: "/contribution-subsidy",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/sss-contribution-subsidy-card_bab86ecb.png",
+  },
+  {
+    id: 4,
+    icon: CreditCard,
+    title: "Pay Contributions and Loans",
+    description: "Regular payment of contributions is essential to qualify for SSS benefits and loans. Here's how and where you can make your SSS payments.",
+    gradient: "from-green-600 to-emerald-700",
+    route: "/pay-contributions",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/sss-payment-card_5020479b.png",
+  },
+  {
+    id: 5,
+    icon: Gift,
+    title: "Apply for a Benefit or Loan",
+    description: "We're here for you and your family. Know if you're qualified for an SSS benefit or loan, the requirements you need to prepare, and how to apply, wherever you are.",
+    gradient: "from-purple-600 to-violet-700",
+    route: "/apply-benefit-loan",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/sss-benefits-loan-card_b5bfcbef.png",
+  },
+  {
+    id: 6,
+    icon: MapPin,
+    title: "Visit an SSS Branch",
+    description: "Check out the list of SSS branches and service offices, here and abroad, to find one near you.",
+    gradient: "from-amber-600 to-orange-700",
+    route: "/branch-locator",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/8052.png",
+  },
+];
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+export function ServiceCards() {
+  const navigate = useNavigate();
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+  return (
+    <section className="py-16 md:py-24 bg-white">
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-sss-blue-primary mb-4">
+            How can SSS help you?
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Discover the services and benefits we offer to protect you and your family
+          </p>
+        </div>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="relative p-[2px] rounded-2xl bg-gradient-to-br from-sss-blue-primary via-sss-blue-accent to-sss-blue-primary/60 hover:from-sss-blue-accent hover:via-sss-blue-primary hover:to-sss-blue-accent transition-all duration-300"
+            >
+              <Card
+                onClick={() => navigate(service.route)}
+                className={cn(
+                  "group cursor-pointer border-none shadow-lg-modern hover:shadow-xl-modern h-full overflow-hidden relative",
+                  "hover:-translate-y-2 transition-all duration-300 rounded-2xl bg-white"
+                )}
+              >
+                {/* Image Section */}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    crossOrigin="anonymous"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+                {/* Icon - Positioned to overlap between image and content */}
+                <div className="absolute left-6 top-[168px] z-20">
+                  <div className="p-[3px] rounded-full bg-gradient-to-br from-sss-blue-primary via-sss-blue-accent to-sss-blue-primary/60 group-hover:from-sss-blue-accent group-hover:via-sss-blue-primary group-hover:to-sss-blue-accent transition-all duration-300 shadow-xl">
+                    <div
+                      className={cn(
+                        "w-14 h-14 rounded-full bg-white flex items-center justify-center",
+                        "group-hover:scale-110 transition-transform duration-300"
+                      )}
+                    >
+                      <service.icon className="w-7 h-7 text-sss-blue-primary" />
+                    </div>
+                  </div>
+                </div>
 
-</html>
+                {/* Content Section */}
+                <CardContent className="pt-10 pb-6 px-6 space-y-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-sss-blue-primary mb-3 leading-tight">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
+
+                  {/* Learn More Button */}
+                  <div className="pt-2">
+                    <div className="inline-flex items-center gap-2 text-sss-blue-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                      <span>Learn More</span>
+                      <span className="inline-block group-hover:translate-x-1 transition-transform">
+                        →
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
