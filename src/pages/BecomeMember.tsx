@@ -1,101 +1,120 @@
-<!doctype html>
-<html lang="en">
+import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, Users, Shield, TrendingUp } from "lucide-react";
+import { useState } from "react";
+import { ApplicationFormModal } from "@/components/modals/ApplicationFormModal";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+export default function BecomeMember() {
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-sss-blue-primary mb-6">
+          Become an SSS Member
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          It pays to be an SSS member. Read about the SSS coverage program and know the type of membership that's for you.
+        </p>
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-2xl text-sss-blue-primary">Why Join SSS?</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex gap-4 items-start">
+              <Shield className="w-6 h-6 text-sss-blue-primary flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-semibold mb-1">Social Protection</h3>
+                <p className="text-muted-foreground">Comprehensive benefits for you and your family</p>
+              </div>
+            </div>
+            <div className="flex gap-4 items-start">
+              <TrendingUp className="w-6 h-6 text-sss-blue-primary flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-semibold mb-1">Retirement Benefits</h3>
+                <p className="text-muted-foreground">Secure your future with pension benefits</p>
+              </div>
+            </div>
+            <div className="flex gap-4 items-start">
+              <Users className="w-6 h-6 text-sss-blue-primary flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-semibold mb-1">Family Protection</h3>
+                <p className="text-muted-foreground">Benefits for dependents and beneficiaries</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-2xl text-sss-blue-primary">Membership Types</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div>
+              <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                Employed Members
+              </h3>
+              <p className="text-muted-foreground ml-7">
+                If you're working for an employer, you're automatically covered by SSS. Your employer handles the registration and contribution remittance.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                Self-Employed Members
+              </h3>
+              <p className="text-muted-foreground ml-7">
+                If you're running your own business or working as a freelancer, you can register as a self-employed member and pay your own contributions.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                Voluntary Members
+              </h3>
+              <p className="text-muted-foreground ml-7">
+                Previously employed or self-employed members who want to continue or resume paying contributions to maintain their SSS coverage.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                OFW Members
+              </h3>
+              <p className="text-muted-foreground ml-7">
+                Overseas Filipino Workers can maintain their SSS membership while working abroad through the Flexi-Fund program.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+        <div className="bg-sss-blue-50 p-8 rounded-lg">
+          <h3 className="text-xl font-semibold text-sss-blue-primary mb-4">Ready to Join?</h3>
+          <p className="text-muted-foreground mb-6">
+            Start your SSS membership today and secure your future. The process is simple and can be done online.
+          </p>
+          <Button 
+            variant="sss-primary" 
+            size="lg"
+            onClick={() => setShowApplicationModal(true)}
+          >
+            Register Now
+          </Button>
+        </div>
+      </div>
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
-
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
-</html>
+      <ApplicationFormModal 
+        open={showApplicationModal}
+        onOpenChange={setShowApplicationModal}
+        applicationType="ss-number"
+      />
+    </div>
+  );
+}
