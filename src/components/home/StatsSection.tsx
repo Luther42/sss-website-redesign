@@ -1,101 +1,147 @@
-<!doctype html>
-<html lang="en">
+import { useEffect, useRef, useState } from "react";
+import { Users, DollarSign, MapPin, Calendar } from "lucide-react";
+import { statistics } from "@/lib/demoData";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
-
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
-
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
-
-  <link rel="canonical" href="https://enter.converge.ai/" />
-
-  <script type="application/ld+json">
+const stats = [
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
+    id: 1,
+    icon: Users,
+    label: "SSS Members",
+    value: statistics.members,
+    suffix: "+",
+    color: "from-blue-500 to-cyan-500",
+  },
+  {
+    id: 2,
+    icon: DollarSign,
+    label: "Benefits Paid Yearly",
+    value: statistics.benefitsPaid,
+    suffix: "",
+    color: "from-emerald-500 to-teal-500",
+  },
+  {
+    id: 3,
+    icon: MapPin,
+    label: "Branches Nationwide",
+    value: statistics.branches,
+    suffix: "+",
+    color: "from-orange-500 to-red-500",
+  },
+  {
+    id: 4,
+    icon: Calendar,
+    label: "Years of Service",
+    value: statistics.years,
+    suffix: "",
+    color: "from-purple-500 to-pink-500",
+  },
+];
+
+function AnimatedNumber({ value, duration = 2000 }: { value: number | string; duration?: number }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
         }
       },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || typeof value !== "number") return;
+
+    const startTime = Date.now();
+    const endValue = value;
+
+    const animate = () => {
+      const currentTime = Date.now();
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const current = Math.floor(easeOutQuart * endValue);
+
+      setDisplayValue(current);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
       }
-    ]
-  }
-  </script>
+    };
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+    animate();
+  }, [isVisible, value, duration]);
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+  return (
+    <div ref={ref} className="text-4xl md:text-5xl font-bold">
+      {typeof value === "number"
+        ? displayValue.toLocaleString()
+        : value}
+    </div>
+  );
+}
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+export function StatsSection() {
+  return (
+    <section className="py-16 md:py-24 bg-gradient-to-br from-sss-blue-primary via-sss-blue-dark to-[hsl(220_85%_35%)] text-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+      </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            SSS by the Numbers
+          </h2>
+          <p className="text-white/80 text-lg">
+            Serving millions of Filipinos with dedication and excellence
+          </p>
+        </div>
 
-</html>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat) => (
+            <div
+              key={stat.id}
+              className="text-center group animate-slide-up"
+              style={{ animationDelay: `${stat.id * 100}ms` }}
+            >
+              <div className="mb-4 inline-flex">
+                <div
+                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                >
+                  <stat.icon className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-center">
+                  <AnimatedNumber value={stat.value} />
+                  {stat.suffix && (
+                    <span className="text-4xl md:text-5xl font-bold ml-1">
+                      {stat.suffix}
+                    </span>
+                  )}
+                </div>
+                <div className="text-white/70 text-sm md:text-base font-medium">
+                  {stat.label}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
