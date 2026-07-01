@@ -1,101 +1,62 @@
-<!doctype html>
-<html lang="en">
+import { AlertTriangle } from "lucide-react";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+export default function Disclaimer() {
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="p-3 bg-warning/10 rounded-lg">
+            <AlertTriangle className="w-8 h-8 text-warning" />
+          </div>
+          <h1 className="text-4xl font-bold text-foreground">Project Disclaimer & Information</h1>
+        </div>
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        <div className="space-y-8 bg-card rounded-xl p-8 shadow-card-sss">
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 text-sss-blue-primary">Purpose of This Website</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              This website is a conceptual redesign created strictly for educational and portfolio purposes. 
+              It is a demonstration of design skills, user experience (UX) research, and interface development. 
+              It is not a live, commercial website, and no services or products are actually being offered for sale.
+            </p>
+          </section>
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 text-sss-blue-primary">Non-Affiliation Statement</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              I am not affiliated with, employed by, or endorsed by Republic of the Philippines Social Security System. 
+              This website was created independently as a personal exercise to explore design implementation and 
+              is not an official representation of the agency or business.
+            </p>
+          </section>
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 text-sss-blue-primary">Intellectual Property & Fair Use</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Existing Brand Assets: Any logos, trademarks, or original copy belonging to Republic of the Philippines 
+              Social Security System used in this redesign are the property of their respective owners. Their inclusion 
+              is solely for the purpose of demonstrating a non-commercial, educational UX/UI design concept and 
+              constitutes fair use.
+            </p>
+          </section>
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+          <section>
+            <h2 className="text-2xl font-semibold mb-4 text-sss-blue-primary">Limitation of Liability</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              In no event will the creator be liable for any loss or damage, including without limitation, indirect or 
+              consequential loss or damage arising out of or in connection with the use of this conceptual website.
+            </p>
+          </section>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
-
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
-
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
-</html>
+          <section className="bg-warning/5 border border-warning/20 rounded-lg p-6">
+            <p className="text-sm text-foreground font-medium">
+              <strong>Disclaimer Notice:</strong> This disclaimer is provided in good faith. If you are a representative 
+              of the Republic of the Philippines Social Security System and have concerns about this project, please 
+              feel free to contact me so that any issues can be addressed promptly.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
