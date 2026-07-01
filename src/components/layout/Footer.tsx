@@ -1,101 +1,211 @@
-<!doctype html>
-<html lang="en">
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Facebook, Twitter, Youtube, Instagram, Linkedin, Mail, Phone, ArrowUp, ExternalLink, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+const footerLinks = {
+  about: [
+    { name: "About SSS", href: "/about" },
+    { name: "Freedom of Information", href: "/foi" },
+    { name: "Republic of the Philippines", href: "#" },
+  ],
+  services: [
+    { name: "Open Data Portal", href: "#" },
+    { name: "Official Gazette", href: "#" },
+    { name: "GOV.PH", href: "#" },
+  ],
+  government: [
+    { name: "Office of the President", href: "#" },
+    { name: "Office of the Vice President", href: "#" },
+    { name: "Senate of the Philippines", href: "#" },
+    { name: "House of Representatives", href: "#" },
+    { name: "Supreme Court", href: "#" },
+    { name: "Court of Appeals", href: "#" },
+  ],
+};
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+const socialLinks = [
+  { icon: Facebook, href: "#", label: "Facebook" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Youtube, href: "#", label: "YouTube" },
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+];
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+export function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+  const [govDialog, setGovDialog] = useState<{ open: boolean; name: string }>({ open: false, name: "" });
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+  const handleGovLinkClick = (name: string) => {
+    setGovDialog({ open: true, name });
+  };
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+  return (
+    <footer className="bg-gradient-to-b from-gray-50 to-white border-t mt-auto">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* About */}
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <img 
+                src="https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/6a66.png" 
+                alt="SSS Logo" 
+                className="h-10 w-auto"
+                crossOrigin="anonymous"
+              />
+              <div>
+                <div className="text-xs text-muted-foreground">Republic of the Philippines</div>
+                <div className="text-sm font-semibold text-sss-blue-primary">SSS</div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4">
+              SSS Building, East Avenue
+              <br />
+              Diliman, Quezon City, Philippines
+            </p>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Phone className="w-4 h-4" />
+                <span>1455</span>
+              </div>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Mail className="w-4 h-4" />
+                <span className="text-xs">member_relations@sss.gov.ph</span>
+              </div>
+            </div>
+          </div>
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+          {/* About Government */}
+          <div>
+            <h3 className="font-semibold text-sm mb-4">ABOUT GOVERNMENT</h3>
+            <ul className="space-y-2">
+              {footerLinks.about.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-muted-foreground hover:text-sss-blue-primary transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+          {/* Government Links */}
+          <div>
+            <h3 className="font-semibold text-sm mb-4">GOVERNMENT LINKS</h3>
+            <ul className="space-y-2">
+              {footerLinks.government.map((link) => (
+                <li key={link.name}>
+                  <button
+                    onClick={() => handleGovLinkClick(link.name)}
+                    className="text-sm text-muted-foreground hover:text-sss-blue-primary transition-colors text-left flex items-center gap-1 group"
+                  >
+                    {link.name}
+                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+          {/* Connect With Us */}
+          <div>
+            <h3 className="font-semibold text-sm mb-4">FOLLOW US ON:</h3>
+            <div className="flex gap-2 mb-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:bg-sss-blue-primary hover:text-white hover:border-sss-blue-primary transition-all hover:scale-110"
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+            <h3 className="font-semibold text-sm mb-3">FOR INQUIRIES:</h3>
+            <div className="text-sm space-y-1">
+              <p className="text-muted-foreground">Contact Center: 1455</p>
+              <p className="text-muted-foreground">Trunkline: (02) 8920-6446 to 55</p>
+            </div>
+          </div>
+        </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-8 border-t">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-sm text-muted-foreground text-center md:text-left">
+              SSS Copyright © 2025.{" "}
+              <Link to="/terms" className="hover:text-sss-blue-primary">
+                Terms of Service
+              </Link>
+              {" | "}
+              <Link to="/disclaimer" className="hover:text-sss-blue-primary">
+                Data Privacy Policy
+              </Link>
+            </div>
+            <Button
+              onClick={scrollToTop}
+              variant="sss-outline"
+              size="sm"
+              className="gap-2"
+            >
+              <ArrowUp className="w-4 h-4" />
+              Back to Top
+            </Button>
+          </div>
+        </div>
+      </div>
 
-</html>
+      {/* Educational Disclaimer */}
+      <div className="bg-sss-blue-50 py-4 text-center text-xs text-muted-foreground">
+        <div className="container mx-auto px-4">
+          This is an educational concept project. Not affiliated with the official SSS.{" "}
+          <Link to="/disclaimer" className="text-sss-blue-primary hover:underline font-medium">
+            View full disclaimer
+          </Link>
+        </div>
+      </div>
+
+      {/* Government Link Demo Dialog */}
+      <Dialog open={govDialog.open} onOpenChange={(open) => setGovDialog({ open, name: govDialog.name })}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-10 h-10 rounded-full bg-sss-blue-primary/10 flex items-center justify-center flex-shrink-0">
+                <Info className="w-5 h-5 text-sss-blue-primary" />
+              </div>
+              <DialogTitle className="text-lg text-sss-blue-primary">External Link Notice</DialogTitle>
+            </div>
+            <DialogDescription className="text-left space-y-3 pt-2">
+              <p className="text-foreground font-medium">
+                "{govDialog.name}"
+              </p>
+              <p className="text-muted-foreground">
+                In the actual SSS website, this link would redirect you to the official{" "}
+                <span className="font-semibold text-sss-blue-primary">{govDialog.name}</span> government website or open a related PDF document.
+              </p>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex gap-2">
+                <ExternalLink className="w-4 h-4 text-yellow-600 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-yellow-800">
+                  <span className="font-semibold">For Demonstration Purposes Only.</span> This is a university project concept redesign of the SSS website. No actual external navigation is implemented.
+                </p>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end pt-2">
+            <Button variant="sss-primary" size="sm" onClick={() => setGovDialog({ open: false, name: "" })}>
+              Got it
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </footer>
+  );
+}
