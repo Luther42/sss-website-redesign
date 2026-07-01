@@ -1,101 +1,143 @@
-<!doctype html>
-<html lang="en">
+import { useState } from "react";
+import { UserCircle, FileText, Calculator, ClipboardCheck } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { PensionCalculatorModal } from "@/components/modals/PensionCalculatorModal";
+import { LoginModal } from "@/components/modals/LoginModal";
+import { ApplicationFormModal } from "@/components/modals/ApplicationFormModal";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
-
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
-
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
-
-  <link rel="canonical" href="https://enter.converge.ai/" />
-
-  <script type="application/ld+json">
+const services = [
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+    id: 1,
+    icon: UserCircle,
+    title: "Create a MySSS",
+    subtitle: "account or login",
+    description: "Access your SSS account online 24/7",
+    gradient: "from-blue-500 to-cyan-500",
+    action: "login",
+  },
+  {
+    id: 2,
+    icon: FileText,
+    title: "Apply for an",
+    subtitle: "SS Number Online",
+    description: "Get your Social Security number online",
+    gradient: "from-indigo-500 to-purple-500",
+    action: "apply-ss",
+  },
+  {
+    id: 3,
+    icon: Calculator,
+    title: "Check out the",
+    subtitle: "Pension Calculator",
+    description: "Estimate your future pension benefits",
+    gradient: "from-violet-500 to-pink-500",
+    action: "calculator",
+  },
+  {
+    id: 4,
+    icon: ClipboardCheck,
+    title: "Submit",
+    subtitle: "ACOP Compliance",
+    description: "Annual Confirmation of Pensioners",
+    gradient: "from-orange-500 to-red-500",
+    action: "acop",
+  },
+];
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+export function QuickServices() {
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isApplicationOpen, setIsApplicationOpen] = useState(false);
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+  const handleCardClick = (action: string) => {
+    if (action === "calculator") {
+      setIsCalculatorOpen(true);
+    } else if (action === "login") {
+      setIsLoginOpen(true);
+    } else if (action === "apply-ss") {
+      setIsApplicationOpen(true);
+    } else if (action === "acop") {
+      toast.info("ACOP Compliance", {
+        description: "This feature will direct you to the ACOP compliance form. This is a demo.",
+      });
+    }
+  };
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+  return (
+    <>
+      <section className="py-16 md:py-20 bg-gradient-to-b from-white to-sss-blue-50/30">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service) => (
+              <div
+                key={service.id}
+                className="relative p-[2px] rounded-2xl bg-gradient-to-br from-sss-blue-primary via-sss-blue-accent to-sss-blue-primary/60 hover:from-sss-blue-accent hover:via-sss-blue-primary hover:to-sss-blue-accent transition-all duration-300"
+              >
+                <Card
+                  onClick={() => handleCardClick(service.action)}
+                  className={cn(
+                    "group cursor-pointer border-none shadow-lg-modern hover:shadow-xl-modern h-full overflow-hidden",
+                    "hover:-translate-y-2 transition-all duration-300 rounded-2xl"
+                  )}
+                >
+                  {/* Header Section with Gradient Background */}
+                  <div className="relative h-24 bg-gradient-to-br from-sss-blue-primary to-sss-blue-accent">
+                    {/* Icon positioned to overlap header and content */}
+                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-8">
+                      <div
+                        className={cn(
+                          "w-16 h-16 rounded-full bg-gradient-to-br flex items-center justify-center",
+                          "group-hover:scale-110 transition-transform duration-300 shadow-xl ring-4 ring-white",
+                          service.gradient
+                        )}
+                      >
+                        <service.icon className="w-8 h-8 text-white" />
+                      </div>
+                    </div>
+                  </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+                  {/* Content Section */}
+                  <CardContent className="pt-12 pb-6 px-6 space-y-3 bg-white">
+                    <div className="text-center">
+                      <h3 className="text-base font-bold text-sss-blue-primary leading-tight">
+                        {service.title}
+                      </h3>
+                      <h3 className="text-base font-bold text-sss-blue-primary mb-2 leading-tight">
+                        {service.subtitle}
+                      </h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {service.description}
+                      </p>
+                    </div>
 
-</html>
+                    {/* Arrow indicator */}
+                    <div className="flex items-center justify-center text-sss-blue-primary text-xs font-semibold group-hover:gap-2 transition-all pt-1">
+                      <span>Learn More</span>
+                      <span className="inline-block group-hover:translate-x-1 transition-transform">
+                        →
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Modals */}
+      <PensionCalculatorModal
+        open={isCalculatorOpen}
+        onOpenChange={setIsCalculatorOpen}
+      />
+      <LoginModal open={isLoginOpen} onOpenChange={setIsLoginOpen} />
+      <ApplicationFormModal
+        open={isApplicationOpen}
+        onOpenChange={setIsApplicationOpen}
+        applicationType="ss-number"
+      />
+    </>
+  );
+}
