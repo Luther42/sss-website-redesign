@@ -1,101 +1,248 @@
-<!doctype html>
-<html lang="en">
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Users, UserCheck, Briefcase, Globe, CheckCircle2, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
-
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
-
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
-
-  <link rel="canonical" href="https://enter.converge.ai/" />
-
-  <script type="application/ld+json">
+const membershipTypes = [
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
+    icon: Briefcase,
+    title: "Employed Members",
+    description: "Private sector employees working for employers in the Philippines",
+    coverage: "Mandatory coverage for all employees earning at least ₱1,000 per month",
+    highlights: [
+      "Employer and employee share contributions",
+      "Coverage starts on employment date",
+      "Continuous until separation from employment"
+    ]
+  },
+  {
+    icon: UserCheck,
+    title: "Self-Employed/Voluntary Members",
+    description: "Self-employed, professionals, and those without employers",
+    coverage: "Optional but encouraged for income protection and security",
+    highlights: [
+      "Pay own contributions based on declared income",
+      "Flexible payment schedules",
+      "Same benefits as employed members"
+    ]
+  },
+  {
+    icon: Globe,
+    title: "OFW Members",
+    description: "Overseas Filipino Workers in land-based and sea-based employment",
+    coverage: "Mandatory for land-based OFWs, voluntary for sea-based OFWs",
+    highlights: [
+      "Special OFW programs and benefits",
+      "Flexible contribution payment options",
+      "Continued coverage even abroad"
+    ]
+  },
+  {
+    icon: Users,
+    title: "Non-Working Spouse",
+    description: "Spouse of an SSS member who is not employed",
+    coverage: "Voluntary coverage to earn own benefits",
+    highlights: [
+      "Independent benefit entitlement",
+      "Same benefit packages available",
+      "Affordable contribution rates"
     ]
   }
-  </script>
+];
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+const coverageIncludes = [
+  "Retirement benefits upon reaching eligible age",
+  "Disability benefits for permanent or temporary disability",
+  "Death benefits for beneficiaries",
+  "Maternity benefits for female members",
+  "Sickness benefits for work-related illness",
+  "Funeral grant for deceased members",
+  "Unemployment benefits (under certain conditions)",
+  "Salary and calamity loan privileges"
+];
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+export default function Membership() {
+  const navigate = useNavigate();
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-sss-blue-primary to-sss-blue-accent text-white py-16 md:py-20">
+        <div className="container mx-auto px-4 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <Users className="w-8 h-8" />
+            </div>
+          </div>
+          <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+            MEMBERSHIP & COVERAGE
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+            SSS Membership & Coverage
+          </h1>
+          <p className="text-xl text-foreground/90 max-w-3xl mx-auto">
+            Join millions of Filipinos protected by comprehensive social security coverage
+          </p>
+        </div>
+      </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      {/* Membership Types */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-sss-blue-primary mb-4">Types of Membership</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            SSS offers different membership types to accommodate various employment situations
+          </p>
+        </div>
 
-</html>
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
+          {membershipTypes.map((type, index) => (
+            <Card 
+              key={index}
+              className="border-2 border-sss-blue-primary/20 hover:border-sss-blue-primary/40 transition-all duration-300 hover:shadow-lg"
+            >
+              <CardHeader>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sss-blue-primary to-sss-blue-accent flex items-center justify-center shadow-md">
+                    <type.icon className="w-7 h-7 text-white" />
+                  </div>
+                  <CardTitle className="text-sss-blue-primary">{type.title}</CardTitle>
+                </div>
+                <p className="text-foreground/80">{type.description}</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                  <p className="text-sm font-semibold text-sss-blue-primary mb-1">Coverage:</p>
+                  <p className="text-sm text-foreground/80">{type.coverage}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-sss-blue-primary mb-2">Key Highlights:</p>
+                  <ul className="space-y-1">
+                    {type.highlights.map((highlight, i) => (
+                      <li key={i} className="text-sm text-foreground/80 flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-sss-blue-primary mt-0.5 flex-shrink-0" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* What Coverage Includes */}
+        <Card className="border-2 border-sss-blue-primary/20 mb-12">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
+            <CardTitle className="text-2xl text-sss-blue-primary">What SSS Coverage Includes</CardTitle>
+            <p className="text-muted-foreground">Comprehensive protection for you and your family</p>
+          </CardHeader>
+          <CardContent className="pt-6">
+            <div className="grid md:grid-cols-2 gap-4">
+              {coverageIncludes.map((item, index) => (
+                <div key={index} className="flex items-start gap-3 p-3 bg-white border border-gray-200 rounded-lg hover:border-sss-blue-primary/40 transition-colors">
+                  <CheckCircle2 className="w-5 h-5 text-sss-blue-primary mt-0.5 flex-shrink-0" />
+                  <span className="text-foreground/80">{item}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Who Must Register */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <Card className="border-2 border-sss-blue-primary/20">
+            <CardHeader>
+              <CardTitle className="text-sss-blue-primary">Who Must Register</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-3 text-foreground/80">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-sss-blue-primary mt-0.5 flex-shrink-0" />
+                  <span>Employees not over 60 years old earning at least ₱1,000 monthly</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-sss-blue-primary mt-0.5 flex-shrink-0" />
+                  <span>Self-employed individuals earning at least ₱1,000 monthly</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-sss-blue-primary mt-0.5 flex-shrink-0" />
+                  <span>Filipinos employed abroad (except certain categories)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-sss-blue-primary mt-0.5 flex-shrink-0" />
+                  <span>Household employers and their domestic helpers</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 border-sss-blue-primary/20">
+            <CardHeader>
+              <CardTitle className="text-sss-blue-primary">How to Become a Member</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-sss-blue-primary text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                    1
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Register Online or In-Person</p>
+                    <p className="text-sm text-muted-foreground">Via MySSS portal or SSS branch</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-sss-blue-primary text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                    2
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Submit Requirements</p>
+                    <p className="text-sm text-muted-foreground">Valid IDs and birth certificate</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-sss-blue-primary text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                    3
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Receive SS Number</p>
+                    <p className="text-sm text-muted-foreground">Your unique identification number</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-sss-blue-primary text-white flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                    4
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Start Contributing</p>
+                    <p className="text-sm text-muted-foreground">Begin building your benefits</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* CTA Section */}
+        <Card className="bg-gradient-to-r from-sss-blue-primary to-sss-blue-accent text-white border-0">
+          <CardContent className="py-12 text-center">
+            <h3 className="text-3xl font-bold mb-4">Ready to Become a Member?</h3>
+            <p className="text-white/90 mb-6 max-w-2xl mx-auto">
+              Start your social security journey today and secure your future and your family's welfare
+            </p>
+            <Button 
+              size="lg" 
+              variant="secondary"
+              onClick={() => navigate('/become-member')}
+              className="group"
+            >
+              Register Now
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
