@@ -1,101 +1,264 @@
-<!doctype html>
-<html lang="en">
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Search, Menu, X, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { LoginModal } from "@/components/modals/LoginModal";
+import { cn } from "@/lib/utils";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+const navigation = [
+  { name: "About SSS", href: "/about" },
+  { name: "Membership & Coverage", href: "/membership" },
+  { name: "News", href: "/news" },
+  { name: "Benefits", href: "/benefits" },
+  { name: "Loans", href: "/loans" },
+  { name: "Laws & Circulars", href: "/laws" },
+  { name: "Opportunities", href: "/opportunities" },
+  { name: "Contact Us", href: "/contact" },
+];
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+// Search database with keywords
+const searchDatabase = [
+  { title: "Become a Member", keywords: ["register", "join", "member", "sign up", "enroll", "new member"], path: "/become-member" },
+  { title: "OFW Program", keywords: ["overseas", "abroad", "ofw", "filipino workers", "international"], path: "/ofw-program" },
+  { title: "Contribution Subsidy", keywords: ["subsidy", "support", "assistance", "contribution", "help"], path: "/contribution-subsidy" },
+  { title: "Pay Contributions", keywords: ["pay", "payment", "contribute", "monthly", "dues"], path: "/pay-contributions" },
+  { title: "Apply for Benefits", keywords: ["benefit", "claim", "apply", "application", "retirement", "pension"], path: "/apply-benefit-loan" },
+  { title: "Branch Locator", keywords: ["branch", "office", "location", "address", "find", "near me"], path: "/branch-locator" },
+  { title: "Retirement Benefits", keywords: ["retire", "retirement", "pension", "old age", "senior"], path: "/benefits" },
+  { title: "Disability Benefits", keywords: ["disability", "disabled", "permanent", "partial"], path: "/benefits" },
+  { title: "Maternity Benefits", keywords: ["maternity", "pregnancy", "mother", "baby", "newborn"], path: "/benefits" },
+  { title: "Salary Loan", keywords: ["salary loan", "loan", "borrow", "emergency", "cash"], path: "/loans" },
+  { title: "Calamity Loan", keywords: ["calamity", "disaster", "emergency loan", "typhoon", "flood"], path: "/loans" },
+  { title: "Housing Loan", keywords: ["housing", "house", "home", "property", "mortgage"], path: "/loans" },
+  { title: "About SSS", keywords: ["about", "information", "history", "vision", "mission"], path: "/about" },
+  { title: "Membership & Coverage", keywords: ["membership", "coverage", "types", "employed", "self-employed"], path: "/membership" },
+  { title: "Contact Us", keywords: ["contact", "help", "support", "hotline", "email", "call"], path: "/contact" },
+  { title: "News & Updates", keywords: ["news", "announcements", "updates", "latest"], path: "/news" },
+  { title: "Laws & Circulars", keywords: ["laws", "circulars", "policy", "regulations", "rules"], path: "/laws" },
+  { title: "Career Opportunities", keywords: ["career", "job", "work", "hiring", "employment"], path: "/opportunities" },
+  { title: "MySSS Login", keywords: ["login", "sign in", "account", "my sss", "portal"], action: "login" },
+];
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+  // Filter search results based on query
+  const searchResults = searchQuery.trim().length > 0
+    ? searchDatabase.filter((item) => {
+        const query = searchQuery.toLowerCase();
+        return (
+          item.title.toLowerCase().includes(query) ||
+          item.keywords.some((keyword) => keyword.toLowerCase().includes(query))
+        );
+      }).slice(0, 6)
+    : [];
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+  const handleSearchItemClick = (item: typeof searchDatabase[0]) => {
+    if (item.action === "login") {
+      setIsSearchOpen(false);
+      setIsLoginModalOpen(true);
+    } else {
+      setIsSearchOpen(false);
+      navigate(item.path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setSearchQuery("");
+  };
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+  return (
+    <header
+      className={cn(
+        "sticky top-0 z-40 w-full border-b transition-all duration-300",
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-md-modern"
+          : "bg-white"
+      )}
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 md:h-20 items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <img 
+              src="https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/6a66.png" 
+              alt="SSS Logo" 
+              className="h-10 md:h-12 w-auto"
+              crossOrigin="anonymous"
+            />
+            <div className="hidden sm:block">
+              <div className="text-xs text-muted-foreground">Republic of the Philippines</div>
+              <div className="text-sm md:text-base font-semibold text-sss-blue-primary">
+                SOCIAL SECURITY SYSTEM
+              </div>
+            </div>
+          </Link>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={cn(
+                  "px-3 py-2 text-sm font-medium rounded-md transition-all",
+                  location.pathname === item.href
+                    ? "text-sss-blue-primary bg-sss-blue-50"
+                    : "text-foreground hover:text-sss-blue-primary hover:bg-sss-blue-50/50"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hover:bg-sss-blue-50"
+              onClick={() => setIsSearchOpen(true)}
+            >
+              <Search className="w-5 h-5" />
+            </Button>
+            <Button
+              variant="sss-primary"
+              size="sm"
+              className="hidden sm:inline-flex"
+              onClick={() => setIsLoginModalOpen(true)}
+            >
+              Login to MySSS
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </Button>
+          </div>
+        </div>
+      </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden border-t bg-white animate-slide-up">
+          <nav className="container mx-auto px-4 py-4 space-y-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={cn(
+                  "block px-4 py-3 text-sm font-medium rounded-lg transition-all",
+                  location.pathname === item.href
+                    ? "text-sss-blue-primary bg-sss-blue-50"
+                    : "text-foreground hover:bg-sss-blue-50/50"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Button
+              variant="sss-primary"
+              className="w-full mt-4"
+              onClick={() => {
+                setIsLoginModalOpen(true);
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              Login to MySSS
+            </Button>
+          </nav>
+        </div>
+      )}
 
-</html>
+      {/* Search Dialog */}
+      <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+        <DialogContent className="sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Search className="w-5 h-5 text-sss-blue-primary" />
+              Search SSS Services
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <Input
+              type="text"
+              placeholder="What are you looking for? (e.g., loan, benefits, membership...)"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="text-base"
+              autoFocus
+            />
+
+            {searchQuery.trim().length === 0 ? (
+              <div className="py-8 text-center text-muted-foreground">
+                <Search className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                <p className="text-sm">Start typing to search for SSS services, benefits, loans, and more...</p>
+              </div>
+            ) : searchResults.length > 0 ? (
+              <div className="space-y-2 max-h-96 overflow-y-auto">
+                <p className="text-xs text-muted-foreground px-1 mb-2">
+                  Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''}
+                </p>
+                {searchResults.map((result, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSearchItemClick(result)}
+                    className="w-full text-left p-4 rounded-lg border border-border hover:border-sss-blue-primary hover:bg-sss-blue-50 transition-all group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-semibold text-foreground group-hover:text-sss-blue-primary transition-colors">
+                          {result.title}
+                        </h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {result.keywords.slice(0, 3).join(" • ")}
+                        </p>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-sss-blue-primary group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="py-8 text-center">
+                <div className="text-4xl mb-3">🔍</div>
+                <p className="text-foreground font-medium mb-1">No results found</p>
+                <p className="text-sm text-muted-foreground">
+                  Try searching for "loan", "benefits", "membership", "contact", etc.
+                </p>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Login Modal */}
+      <LoginModal open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen} />
+    </header>
+  );
+}
