@@ -1,101 +1,148 @@
-<!doctype html>
-<html lang="en">
+import { useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Clock, Phone, Mail } from "lucide-react";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+export default function BranchLocator() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const branches = [
+    {
+      name: "SSS Main Office",
+      address: "East Avenue, Diliman, Quezon City",
+      phone: "(02) 8920-6401",
+      hours: "Monday to Friday, 8:00 AM - 5:00 PM",
+    },
+    {
+      name: "SSS Makati Branch",
+      address: "SSS Building, Ayala Avenue, Makati City",
+      phone: "(02) 8899-7777",
+      hours: "Monday to Friday, 8:00 AM - 5:00 PM",
+    },
+    {
+      name: "SSS Manila Branch",
+      address: "G/F Starmall, EDSA corner Shaw Boulevard, Mandaluyong City",
+      phone: "(02) 8531-4166",
+      hours: "Monday to Friday, 8:00 AM - 5:00 PM",
+    },
+  ];
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-sss-blue-primary mb-6">
+          Visit an SSS Branch
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Check out the list of SSS branches and service offices, here and abroad, to find one near you.
+        </p>
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+        <Card className="mb-8 bg-gradient-card">
+          <CardContent className="pt-6">
+            <h3 className="text-xl font-semibold text-sss-blue-primary mb-4">
+              SSS Branch Network
+            </h3>
+            <p className="text-muted-foreground">
+              The Social Security System has an extensive network of branches, extension offices, and service centers across the Philippines and selected locations abroad. Our offices provide a full range of SSS services including registration, contributions, benefits, and loans.
+            </p>
+          </CardContent>
+        </Card>
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-sss-blue-primary mb-6">Featured Branches</h2>
+          <div className="space-y-4">
+            {branches.map((branch, index) => (
+              <Card key={index} className="hover:shadow-lg-modern transition-all">
+                <CardContent className="pt-6">
+                  <h3 className="text-xl font-semibold text-sss-blue-primary mb-4">
+                    {branch.name}
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex gap-3 items-start">
+                      <MapPin className="w-5 h-5 text-sss-blue-primary flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Address</p>
+                        <p className="text-muted-foreground">{branch.address}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 items-start">
+                      <Phone className="w-5 h-5 text-sss-blue-primary flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Phone</p>
+                        <p className="text-muted-foreground">{branch.phone}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 items-start">
+                      <Clock className="w-5 h-5 text-sss-blue-primary flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Office Hours</p>
+                        <p className="text-muted-foreground">{branch.hours}</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+        <Card className="mb-8">
+          <CardContent className="pt-6">
+            <h3 className="text-xl font-semibold text-sss-blue-primary mb-4">
+              Services Available at Branches
+            </h3>
+            <ul className="grid md:grid-cols-2 gap-3">
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>SSS Number Registration</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Contribution Payment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Loan Application</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Benefit Claims</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>ID Card Issuance</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Records Verification</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
-
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
-</html>
+        <div className="bg-sss-blue-50 p-8 rounded-lg">
+          <h3 className="text-xl font-semibold text-sss-blue-primary mb-4">
+            Contact Information
+          </h3>
+          <div className="space-y-4">
+            <div className="flex gap-3 items-start">
+              <Phone className="w-5 h-5 text-sss-blue-primary flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium">SSS Hotline</p>
+                <p className="text-muted-foreground">(02) 8920-6446 to 55</p>
+              </div>
+            </div>
+            <div className="flex gap-3 items-start">
+              <Mail className="w-5 h-5 text-sss-blue-primary flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium">Email</p>
+                <p className="text-muted-foreground">members_relations@sss.gov.ph</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
