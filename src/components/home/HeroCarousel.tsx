@@ -1,101 +1,255 @@
-<!doctype html>
-<html lang="en">
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ApplicationFormModal } from "@/components/modals/ApplicationFormModal";
+import { LoginModal } from "@/components/modals/LoginModal";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
-
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
-
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
-
-  <link rel="canonical" href="https://enter.converge.ai/" />
-
-  <script type="application/ld+json">
+const slides = [
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+    id: 1,
+    title: "Get the MySSS Card",
+    subtitle: "Your new SSS functional ID and Bank account in one.",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/b31e.png",
+    cta: "Apply Now",
+    ctaSecondary: "Learn More",
+    applicationType: "mysss-card" as const,
+    actionType: "modal" as const,
+  },
+  {
+    id: 2,
+    title: "Basta SSS member,",
+    subtitle: "bawat OFW protektado.",
+    description: "May maaasahan, nasaan man sa mundo.",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/sss-ofw-protection-hero_bed7e613.png",
+    cta: "Get an SS Number",
+    ctaSecondary: "Learn More",
+    applicationType: "ss-number" as const,
+    actionType: "modal" as const,
+  },
+  {
+    id: 3,
+    title: "Need a SALARY LOAN?",
+    subtitle: "Online lang 'yan sa MySSS!",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/sss-salary-loan-hero_a1e796b5.png",
+    cta: "Apply Now",
+    ctaSecondary: "Learn More",
+    applicationType: "salary-loan" as const,
+    actionType: "modal" as const,
+  },
+  {
+    id: 4,
+    title: "Get a",
+    titleHighlight: "Pension Account",
+    titleSuffix: "abroad",
+    subtitle: "Available for overseas Filipinos, former Filipinos with acquired foreign citizenship, and foreign nationals",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/bf8f.png",
+    cta: "Learn How",
+    actionType: "navigate" as const,
+    navigateTo: "/ofw-program",
+  },
+  {
+    id: 5,
+    title: "Are you future ready?",
+    subtitle: "Start your journey to financial freedom with MySSS Pension Booster!",
+    image: "https://grazia-prod.oss-ap-southeast-1.aliyuncs.com/resources/uid_100028286/ef65c4f8-847c-45.png",
+    cta: "Enroll via MySSS",
+    ctaSecondary: "Learn more",
+    actionType: "login" as const,
+  },
+];
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+export function HeroCarousel() {
+  const [current, setCurrent] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [applicationType, setApplicationType] = useState<"mysss-card" | "ss-number" | "salary-loan">("mysss-card");
+  const navigate = useNavigate();
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 5000);
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  const next = () => {
+    setCurrent((prev) => (prev + 1) % slides.length);
+    setIsAutoPlaying(false);
+  };
 
-</html>
+  const prev = () => {
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+    setIsAutoPlaying(false);
+  };
+
+  const handlePrimaryAction = (slide: typeof slides[0]) => {
+    if (slide.actionType === "modal" && slide.applicationType) {
+      setApplicationType(slide.applicationType);
+      setShowApplicationModal(true);
+    } else if (slide.actionType === "navigate" && slide.navigateTo) {
+      navigate(slide.navigateTo);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (slide.actionType === "login") {
+      setShowLoginModal(true);
+    }
+  };
+
+  const handleSecondaryAction = (slide: typeof slides[0]) => {
+    if (slide.actionType === "login" && slide.ctaSecondary) {
+      toast.info("Pension Booster Information", {
+        description: "Learn more about growing your retirement savings with MySSS Pension Booster.",
+      });
+    } else {
+      toast.info("More Information", {
+        description: `Learn more about ${slide.title} in the detailed information page.`,
+      });
+    }
+  };
+
+  return (
+    <div className="relative overflow-hidden bg-gradient-to-r from-sss-blue-primary via-sss-blue-accent to-sss-blue-light">
+      {slides.map((slide, index) => (
+        <div
+          key={slide.id}
+          className={cn(
+            "transition-all duration-700 ease-in-out",
+            index === current
+              ? "opacity-100 relative"
+              : "opacity-0 absolute inset-0 pointer-events-none"
+          )}
+        >
+          <div className="container mx-auto px-4 md:px-8 lg:px-16">
+            <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[500px] md:min-h-[600px] py-12 md:py-20">
+              {/* Content */}
+              <div className="text-white space-y-4 animate-slide-up max-w-xl" style={{ animationDelay: `${index === current ? '200ms' : '0ms'}` }}>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                  {slide.title}
+                  {slide.titleHighlight && (
+                    <span className="block text-sss-accent">{slide.titleHighlight}</span>
+                  )}
+                  {slide.titleSuffix && ` ${slide.titleSuffix}`}
+                </h1>
+                <p className="text-lg md:text-xl font-medium text-white/90">
+                  {slide.subtitle}
+                </p>
+                {slide.description && (
+                  <p className="text-base md:text-lg text-white/80">
+                    {slide.description}
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <Button 
+                    variant="carousel-pill" 
+                    size="lg"
+                    onClick={() => handlePrimaryAction(slide)}
+                  >
+                    {slide.cta}
+                  </Button>
+                  {slide.ctaSecondary && (
+                    <Button 
+                      variant="carousel-pill-ghost" 
+                      size="lg"
+                      onClick={() => handleSecondaryAction(slide)}
+                    >
+                      {slide.ctaSecondary}
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Image with Natural Blend Effect - Full Height Right Side */}
+              <div className="absolute inset-y-0 right-0 w-full md:w-3/4 lg:w-3/5 animate-fade-in" style={{ animationDelay: `${index === current ? '400ms' : '0ms'}` }}>
+                <div className="relative h-full overflow-hidden">
+                  {/* Image fills full height and extends to right */}
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="absolute right-0 h-full w-full object-cover object-right"
+                    crossOrigin="anonymous"
+                    style={{
+                      maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 8%, rgba(0,0,0,0.6) 12%, rgba(0,0,0,0.9) 16%, black 20%)',
+                      WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 8%, rgba(0,0,0,0.6) 12%, rgba(0,0,0,0.9) 16%, black 20%)',
+                    }}
+                  />
+                  
+                  {/* Soft gradient overlay on left edge for ultra-smooth blend */}
+                  <div 
+                    className="absolute inset-y-0 left-0 pointer-events-none"
+                    style={{
+                      width: '20%',
+                      background: 'linear-gradient(to right, rgba(59, 130, 246, 0.1) 0%, transparent 100%)',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {/* Navigation Controls - Bottom Right with Indicators */}
+      <div className="absolute bottom-8 right-8 z-20 flex items-center gap-4">
+        {/* Navigation Buttons */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={prev}
+            className="p-1.5 rounded-full bg-sss-blue-primary backdrop-blur-md border border-sss-blue-light text-white hover:bg-sss-blue-accent transition-all hover:scale-110 shadow-md"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+          </button>
+          <button
+            onClick={next}
+            className="p-1.5 rounded-full bg-sss-blue-primary backdrop-blur-md border border-sss-blue-light text-white hover:bg-sss-blue-accent transition-all hover:scale-110 shadow-md"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+        
+        {/* Divider */}
+        <div className="w-px h-4 bg-sss-blue-primary" />
+        
+        {/* Indicators */}
+        <div className="flex gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setCurrent(index);
+                setIsAutoPlaying(false);
+              }}
+              className={cn(
+                "h-1 rounded-full transition-all",
+                index === current
+                  ? "w-8 bg-sss-blue-primary shadow-sm"
+                  : "w-5 bg-sss-blue-light hover:bg-sss-blue-accent"
+              )}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Application Modal */}
+      <ApplicationFormModal 
+        open={showApplicationModal}
+        onOpenChange={setShowApplicationModal}
+        applicationType={applicationType}
+      />
+
+      {/* Login Modal */}
+      <LoginModal 
+        open={showLoginModal}
+        onOpenChange={setShowLoginModal}
+      />
+    </div>
+  );
+}
