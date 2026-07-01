@@ -1,101 +1,214 @@
-<!doctype html>
-<html lang="en">
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Calculator, TrendingUp, Calendar, DollarSign } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+interface PensionCalculatorModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+export function PensionCalculatorModal({
+  open,
+  onOpenChange,
+}: PensionCalculatorModalProps) {
+  const [age, setAge] = useState([35]);
+  const [monthlySalary, setMonthlySalary] = useState(30000);
+  const [yearsOfContribution, setYearsOfContribution] = useState([10]);
+  const [result, setResult] = useState<number | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+  const handleCalculate = async () => {
+    setIsCalculating(true);
+    
+    // Simulate calculation
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+    // Simple pension calculation formula (demo purposes)
+    const baseAmount = monthlySalary * 0.4;
+    const yearBonus = yearsOfContribution[0] * 100;
+    const estimatedPension = Math.floor(baseAmount + yearBonus);
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+    setResult(estimatedPension);
+    setIsCalculating(false);
+  };
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+  const handleReset = () => {
+    setAge([35]);
+    setMonthlySalary(30000);
+    setYearsOfContribution([10]);
+    setResult(null);
+  };
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold text-sss-blue-primary flex items-center gap-2">
+            <Calculator className="w-6 h-6" />
+            Pension Calculator
+          </DialogTitle>
+          <DialogDescription>
+            Estimate your future SSS pension based on your contributions. This is
+            a demonstration calculator only.
+          </DialogDescription>
+        </DialogHeader>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+        <div className="space-y-6 mt-4">
+          {/* Current Age */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                Current Age
+              </Label>
+              <span className="text-sm font-semibold text-sss-blue-primary">
+                {age[0]} years old
+              </span>
+            </div>
+            <Slider
+              value={age}
+              onValueChange={setAge}
+              min={18}
+              max={65}
+              step={1}
+              className="w-full"
+            />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>18</span>
+              <span>65</span>
+            </div>
+          </div>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+          {/* Monthly Salary */}
+          <div className="space-y-3">
+            <Label htmlFor="salary" className="flex items-center gap-2">
+              <DollarSign className="w-4 h-4" />
+              Average Monthly Salary (₱)
+            </Label>
+            <Input
+              id="salary"
+              type="number"
+              value={monthlySalary}
+              onChange={(e) => setMonthlySalary(Number(e.target.value))}
+              min={1000}
+              max={200000}
+              step={1000}
+            />
+          </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+          {/* Years of Contribution */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4" />
+                Years of Contribution
+              </Label>
+              <span className="text-sm font-semibold text-sss-blue-primary">
+                {yearsOfContribution[0]} years
+              </span>
+            </div>
+            <Slider
+              value={yearsOfContribution}
+              onValueChange={setYearsOfContribution}
+              min={1}
+              max={40}
+              step={1}
+              className="w-full"
+            />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>1 year</span>
+              <span>40 years</span>
+            </div>
+          </div>
 
-</html>
+          {/* Result */}
+          {result !== null && (
+            <Card className="border-sss-blue-primary/20 bg-sss-blue-50/50 animate-scale-in">
+              <CardContent className="p-6">
+                <div className="text-center space-y-2">
+                  <p className="text-sm text-muted-foreground font-medium">
+                    Estimated Monthly Pension
+                  </p>
+                  <p className="text-4xl font-bold text-sss-blue-primary">
+                    ₱{result.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    This is an estimate based on current SSS rules. Actual pension may
+                    vary.
+                  </p>
+                </div>
+
+                <div className="mt-4 p-3 bg-white rounded-lg border">
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Retirement Age
+                      </p>
+                      <p className="text-sm font-semibold">65 years</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Total Years
+                      </p>
+                      <p className="text-sm font-semibold">
+                        {yearsOfContribution[0]} years
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Annual Pension
+                      </p>
+                      <p className="text-sm font-semibold">
+                        ₱{(result * 12).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Buttons */}
+          <div className="flex gap-3">
+            <Button
+              onClick={handleCalculate}
+              variant="sss-gradient"
+              className="flex-1"
+              size="lg"
+              disabled={isCalculating}
+            >
+              {isCalculating ? "Calculating..." : "Calculate Pension"}
+            </Button>
+            <Button
+              onClick={handleReset}
+              variant="sss-outline"
+              size="lg"
+            >
+              Reset
+            </Button>
+          </div>
+
+          {/* Demo Notice */}
+          <div className="bg-warning/10 border border-warning/30 rounded-lg p-3">
+            <p className="text-xs text-center text-muted-foreground">
+              <strong className="text-warning">Demo Calculator:</strong> This
+              calculator uses simplified formulas for demonstration purposes. For
+              accurate pension estimates, please consult SSS official calculators.
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
