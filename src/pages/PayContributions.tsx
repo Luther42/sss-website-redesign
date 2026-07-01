@@ -1,101 +1,155 @@
-<!doctype html>
-<html lang="en">
+import { useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CreditCard, Building, Smartphone, MapPin } from "lucide-react";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+export default function PayContributions() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-sss-blue-primary mb-6">
+          Pay Contributions and Loans
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Regular payment of contributions is essential to qualify for SSS benefits and loans. Here's how and where you can make your SSS payments.
+        </p>
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+        <Card className="mb-8 bg-gradient-card">
+          <CardHeader>
+            <CardTitle className="text-2xl text-sss-blue-primary">Payment Options</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              SSS offers multiple convenient payment channels to make it easier for members to pay their contributions and loan amortizations.
+            </p>
+          </CardContent>
+        </Card>
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card className="hover:shadow-lg-modern transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex gap-4 items-start">
+                <Smartphone className="w-8 h-8 text-sss-blue-primary flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Online Banking</h3>
+                  <p className="text-muted-foreground mb-3">
+                    Pay through your bank's online or mobile banking app.
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• BDO Online Banking</li>
+                    <li>• BPI Express Online</li>
+                    <li>• Unionbank Online</li>
+                    <li>• And more banks</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+          <Card className="hover:shadow-lg-modern transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex gap-4 items-start">
+                <CreditCard className="w-8 h-8 text-sss-blue-primary flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Payment Centers</h3>
+                  <p className="text-muted-foreground mb-3">
+                    Visit authorized payment centers nationwide.
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• SM Bills Payment</li>
+                    <li>• Bayad Center</li>
+                    <li>• 7-Eleven</li>
+                    <li>• Robinsons Dept. Store</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+          <Card className="hover:shadow-lg-modern transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex gap-4 items-start">
+                <Building className="w-8 h-8 text-sss-blue-primary flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Over-the-Counter</h3>
+                  <p className="text-muted-foreground mb-3">
+                    Pay at bank branches and remittance centers.
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• All authorized banks</li>
+                    <li>• Cebuana Lhuillier</li>
+                    <li>• M Lhuillier</li>
+                    <li>• Western Union</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+          <Card className="hover:shadow-lg-modern transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex gap-4 items-start">
+                <MapPin className="w-8 h-8 text-sss-blue-primary flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">SSS Branches</h3>
+                  <p className="text-muted-foreground mb-3">
+                    Pay directly at any SSS branch nationwide.
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• Main and extension offices</li>
+                    <li>• Service offices</li>
+                    <li>• Mobile service units</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-2xl text-sss-blue-primary">Payment Schedule</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <h4 className="font-semibold mb-2">Monthly Contributions</h4>
+              <p className="text-muted-foreground">
+                Contributions should be paid on or before the due date indicated in your Payment Reference Number (PRN). For employed members, employers must remit contributions by the last day of the month.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-2">Loan Payments</h4>
+              <p className="text-muted-foreground">
+                Loan amortizations should be paid monthly as per your loan schedule. Late payments may incur penalties and affect your eligibility for future loans.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
-</html>
+        <div className="bg-sss-blue-50 p-8 rounded-lg">
+          <h3 className="text-xl font-semibold text-sss-blue-primary mb-4">Need Your PRN?</h3>
+          <p className="text-muted-foreground mb-4">
+            Your Payment Reference Number (PRN) is required for payment. Get your PRN through:
+          </p>
+          <ul className="text-muted-foreground space-y-2 mb-6">
+            <li className="flex items-start gap-2">
+              <span className="text-sss-blue-primary">•</span>
+              <span>MySSS Portal - Generate PRN online</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-sss-blue-primary">•</span>
+              <span>SSS Mobile App - Available for iOS and Android</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-sss-blue-primary">•</span>
+              <span>SSS Branch - Visit any branch for assistance</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
