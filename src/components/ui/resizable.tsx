@@ -1,101 +1,43 @@
-<!doctype html>
-<html lang="en">
+import { GripVertical } from "lucide-react"
+import * as ResizablePrimitive from "react-resizable-panels"
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+import { cn } from "@/lib/utils"
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+const ResizablePanelGroup = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
+  <ResizablePrimitive.PanelGroup
+    className={cn(
+      "flex h-full w-full data-[panel-group-direction=vertical]:flex-col",
+      className
+    )}
+    {...props}
+  />
+)
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+const ResizablePanel = ResizablePrimitive.Panel
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+const ResizableHandle = ({
+  withHandle,
+  className,
+  ...props
+}: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & {
+  withHandle?: boolean
+}) => (
+  <ResizablePrimitive.PanelResizeHandle
+    className={cn(
+      "relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-y-1/2 data-[panel-group-direction=vertical]:after:translate-x-0 [&[data-panel-group-direction=vertical]>div]:rotate-90",
+      className
+    )}
+    {...props}
+  >
+    {withHandle && (
+      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border">
+        <GripVertical className="h-2.5 w-2.5" />
+      </div>
+    )}
+  </ResizablePrimitive.PanelResizeHandle>
+)
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
-
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
-
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
-</html>
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
