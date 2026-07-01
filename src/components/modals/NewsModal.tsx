@@ -1,101 +1,146 @@
-<!doctype html>
-<html lang="en">
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Calendar, User, Tag, Clock } from "lucide-react";
+import type { NewsArticle } from "@/types";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+interface NewsModalProps {
+  article: NewsArticle | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+export function NewsModal({ article, open, onOpenChange }: NewsModalProps) {
+  if (!article) return null;
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <div className="space-y-4">
+            {/* Featured Image */}
+            {article.featuredImage && (
+              <div className="w-full h-64 -mx-6 -mt-6 mb-4 overflow-hidden">
+                <img
+                  src={article.featuredImage}
+                  alt={article.title}
+                  className="w-full h-full object-cover"
+                  crossOrigin="anonymous"
+                />
+              </div>
+            )}
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+            {/* Category & Date */}
+            <div className="flex flex-wrap items-center gap-3 text-sm">
+              <span className="px-3 py-1 bg-sss-blue-50 text-sss-blue-primary rounded-md font-medium">
+                {article.category}
+              </span>
+              <div className="flex items-center gap-1.5 text-muted-foreground">
+                <Calendar className="w-4 h-4" />
+                <span>{new Date(article.date).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-muted-foreground">
+                <Clock className="w-4 h-4" />
+                <span>{article.readingTime} min read</span>
+              </div>
+            </div>
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+            <DialogTitle className="text-3xl font-bold text-sss-blue-primary leading-tight">
+              {article.title}
+            </DialogTitle>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+            {/* Author */}
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <User className="w-4 h-4" />
+              <span>By {article.author}</span>
+            </div>
+          </div>
+        </DialogHeader>
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+        {/* Article Content */}
+        <div className="space-y-6 py-6">
+          {/* Excerpt */}
+          <div className="text-lg font-medium text-foreground leading-relaxed border-l-4 border-sss-blue-primary pl-4 bg-sss-blue-50/30 py-3 rounded-r">
+            {article.excerpt}
+          </div>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+          {/* Full Content */}
+          <div className="prose prose-slate max-w-none">
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+              {article.content}
+            </p>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+            {/* Demo content extension */}
+            <div className="mt-6 space-y-4 text-muted-foreground">
+              <p>
+                The Social Security System (SSS) remains committed to providing comprehensive 
+                social protection to all Filipino workers and their families. Through continuous 
+                innovation and improvement of our services, we ensure that every member receives 
+                the benefits they deserve.
+              </p>
+              <p>
+                This initiative is part of our ongoing efforts to enhance member experience and 
+                ensure sustainable social security coverage for all Filipinos, whether working 
+                locally or abroad.
+              </p>
+              <p>
+                For more information about SSS programs and services, members can visit any SSS 
+                branch nationwide or access their accounts through the MySSS portal available 
+                24/7 online.
+              </p>
+            </div>
+          </div>
 
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+          {/* Tags */}
+          {article.tags && article.tags.length > 0 && (
+            <div className="pt-4 border-t">
+              <div className="flex items-center gap-2 flex-wrap">
+                <Tag className="w-4 h-4 text-muted-foreground" />
+                {article.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-sss-blue-50 hover:text-sss-blue-primary transition-colors cursor-pointer"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
-</html>
+          {/* Demo Notice */}
+          <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 mt-6">
+            <p className="text-xs text-center text-muted-foreground">
+              <strong className="text-warning">Demo Article:</strong> This is a demonstration 
+              interface for educational purposes. The content shown is simulated and for concept 
+              presentation only.
+            </p>
+          </div>
+
+          {/* Share & Close */}
+          <div className="flex gap-3 pt-4">
+            <Button variant="sss-primary" className="flex-1">
+              Share Article
+            </Button>
+            <Button 
+              variant="sss-outline" 
+              onClick={() => onOpenChange(false)}
+              className="flex-1"
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
