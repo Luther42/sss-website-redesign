@@ -1,101 +1,173 @@
-<!doctype html>
-<html lang="en">
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Gift, DollarSign, Heart, Home } from "lucide-react";
+import { ApplicationFormModal } from "@/components/modals/ApplicationFormModal";
 
-<head>
-  <script type="text/javascript">window.__APP__ = {"build":{"version":"20260630-200654"}};</script>
+export default function ApplyBenefitLoan() {
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
 
-  <meta charset="UTF-8" />
-  <link href="/favicon.ico" rel="icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta name="keywords"
-    content="Enter, enterpro, AI website builder, AI agent, AI web development, full-chain generation, multi-agent platform, generative AI, AI code, AI design, full-stack development, dev agent, AI software engineer, production-ready code, AI deployment, no-code, low-code" />
-  <script>
-    (function () {
-      try {
-        var storedTheme = window.localStorage.getItem('enter-theme');
-        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add('theme-zinc', resolvedTheme);
-      } catch (error) {
-        document.documentElement.classList.add('theme-zinc', 'dark');
-      }
-    })();
-  </script>
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-sss-blue-primary mb-6">
+          Apply for a Benefit or Loan
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          We're here for you and your family. Know if you're qualified for an SSS benefit or loan, the requirements you need to prepare, and how to apply, wherever you are.
+        </p>
 
-  <meta property="og:title" content="Enter - chat to build websites & apps" />
-  <meta property="og:description"
-    content="Go from your creative idea to launch your Apps in minutes by Chat and Enter." />
-  <meta property="og:image"
-    content="https://assets-cdn.enter.pro/enter-seo-og.jpg" />
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card className="hover:shadow-lg-modern transition-shadow">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                  <DollarSign className="w-6 h-6 text-sss-blue-primary" />
+                </div>
+                <CardTitle>Salary Loan</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Get short-term financial assistance to meet immediate needs. Easy application process with fast approval.
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-2 mb-4">
+                <li>• Loanable amount up to 2 months salary</li>
+                <li>• 24-month payment term</li>
+                <li>• 10% annual interest rate</li>
+              </ul>
+              <Button 
+                variant="sss-primary" 
+                className="w-full"
+                onClick={() => setShowApplicationModal(true)}
+              >
+                Apply for Salary Loan
+              </Button>
+            </CardContent>
+          </Card>
 
-  <link rel="canonical" href="https://enter.converge.ai/" />
+          <Card className="hover:shadow-lg-modern transition-shadow">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                  <Home className="w-6 h-6 text-green-600" />
+                </div>
+                <CardTitle>Calamity Loan</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Special loan assistance for members affected by natural disasters or calamities.
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-2 mb-4">
+                <li>• Up to 1 month salary credit</li>
+                <li>• 24-month payment term</li>
+                <li>• 10% annual interest rate</li>
+              </ul>
+              <Button variant="outline" className="w-full">
+                Check Eligibility
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://enter.converge.ai/#organization",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "logo": "https://enter.converge.ai/favicon.ico",
-        "sameAs": [
-          "https://x.com/EnterProAI",
-          "https://www.youtube.com/@EnterProAI",
-          "https://www.tiktok.com/@enter_pro_ai"
-        ],
-        "description": "Enter — Your AI Dev Agent for the Vibe Coding Era. Build professional full-stack apps and websites via natural language with elite templates and cloud integrations."
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://enter.converge.ai/#software",
-        "name": "Enter",
-        "url": "https://enter.converge.ai/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "description": "The AI Dev Agent for Vibe Coding. Professional-grade full-stack mastery with natural language.",
-        "author": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://enter.converge.ai/#website",
-        "url": "https://enter.converge.ai/",
-        "name": "Enter",
-        "publisher": {
-          "@id": "https://enter.converge.ai/#organization"
-        }
-      }
-    ]
-  }
-  </script>
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-2xl text-sss-blue-primary flex items-center gap-3">
+              <Gift className="w-7 h-7" />
+              SSS Benefits
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div>
+              <h4 className="font-semibold text-lg mb-2">Sickness Benefit</h4>
+              <p className="text-muted-foreground">
+                Daily cash allowance for members who are unable to work due to sickness or injury for a minimum of 4 days.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg mb-2">Maternity Benefit</h4>
+              <p className="text-muted-foreground">
+                Cash benefit for female members who are unable to work due to childbirth, miscarriage, or emergency termination of pregnancy. Includes 105 days of paid maternity leave.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg mb-2">Retirement Benefit</h4>
+              <p className="text-muted-foreground">
+                Monthly pension or lump sum payment for members who can no longer work due to old age. Available at age 60 with at least 120 contributions.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg mb-2">Disability Benefit</h4>
+              <p className="text-muted-foreground">
+                Cash benefit for members who become permanently disabled, either partially or totally.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg mb-2">Death Benefit</h4>
+              <p className="text-muted-foreground">
+                Monthly pension or lump sum payment to the beneficiaries of a deceased member. Includes funeral benefit of ₱60,000.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
-  <!-- Google Tag Manager: script injected from main.tsx via scheduleGtmScriptLoad (idle / after load) -->
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-2xl text-sss-blue-primary flex items-center gap-3">
+              <Heart className="w-7 h-7" />
+              General Requirements
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Valid SSS membership with sufficient contributions</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Accomplished and signed application form</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Valid government-issued ID</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-sss-blue-primary">•</span>
+                <span>Supporting documents specific to the benefit/loan applied for</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.enter.pro">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-  <title>Enter</title>
-  <script type="module" crossorigin src="/_enter_web/assets/main-BPR7I7yg.js"></script>
-  <link rel="stylesheet" crossorigin href="/_enter_web/assets/snapshot-Xz9zxCUp.css">
-<link rel="preload" href="/_enter_web/assets/sandbox-cff498a7.js" as="fetch" crossorigin id="sandbox-preload">
-</head>
+        <div className="bg-sss-blue-50 p-8 rounded-lg">
+          <h3 className="text-xl font-semibold text-sss-blue-primary mb-4">
+            Need More Information?
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            Visit our Benefits page for detailed information on each benefit program, or contact our hotline for personalized assistance.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Button variant="sss-primary" size="lg">
+              View All Benefits
+            </Button>
+            <Button variant="outline" size="lg">
+              Contact Us
+            </Button>
+          </div>
+        </div>
+      </div>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXJCNVLK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <div id="root"></div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140884b6a5a045c',t:'MTc4Mjg1Nzc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
-</html>
+      <ApplicationFormModal 
+        open={showApplicationModal}
+        onOpenChange={setShowApplicationModal}
+        applicationType="salary-loan"
+      />
+    </div>
+  );
+}
